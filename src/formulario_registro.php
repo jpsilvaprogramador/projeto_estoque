@@ -1,13 +1,22 @@
-
 <?php
 
+declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-?>
+session_start();
+
+if (isset($_SESSION['mensagem'])) {
+  echo '<div class="container mt-2 alert alert-' . $_SESSION['tipo'] . ' alert-dismissible fade show text-center" role="alert">' . $_SESSION['mensagem'] . '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>';
+
+  // Limpa a mensagem para não reaparecer ao atualizar 
+  unset($_SESSION['mensagem']);
+  unset($_SESSION['tipo']);
+} ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +24,7 @@ require __DIR__ . '/../vendor/autoload.php';
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-light">
 
   <div class="container mt-5">
@@ -27,7 +37,7 @@ require __DIR__ . '/../vendor/autoload.php';
           <!-- Campo Nome do Produto -->
           <div class="mb-3">
             <label for="nomeProduto" class="form-label">Nome e descrição breve do Produto</label>
-            <input type="text" name="nomeProduto" class="form-control" id="nomeProduto" placeholder="Saco de lixo - 15L" required>
+            <input type="text" name="nomeProduto" class="form-control" id="nomeProduto" placeholder="Saco de lixo - 15L">
           </div>
 
           <!-- Botões -->
@@ -41,7 +51,25 @@ require __DIR__ . '/../vendor/autoload.php';
     </div>
   </div>
 
+  <script>
+    //Seleciona todos os alerts
+    const alerts = document.querySelectorAll('.alert');
+
+    alerts.forEach(alert => {
+      //Define o tempo (em ms) para desaparecer
+      setTimeout(() => {
+        alert.classList.remove('show');
+        alert.classList.add('fade');
+        setTimeout(() => {
+          alert.remove();
+        }, 500)
+      }, 4000)
+    });
+  </script>
+
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>
