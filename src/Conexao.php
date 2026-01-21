@@ -8,7 +8,6 @@ use PDO;
 use PDOException;
 use Dotenv\Dotenv;
 
-//Classe Conexão
 class Conexao
 {
     private static $instance;
